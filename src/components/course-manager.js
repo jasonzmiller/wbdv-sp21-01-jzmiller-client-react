@@ -3,6 +3,8 @@ import {Link, Route} from "react-router-dom";
 import courseService from "../services/course-service";
 import CourseNavbar from "./course-navbar";
 import CourseTable from "./course-table";
+import CourseGrid from "./course-grid";
+import CourseEditor from "./course-editor";
 
 export default class CourseManager extends React.Component {
     state = {
@@ -59,7 +61,7 @@ export default class CourseManager extends React.Component {
         return(
             <div>
                 <Route path={["/courses/table", "/courses/grid"]}>
-                    <CourseNavbar/>
+                    <CourseNavbar addCourse={this.addCourse}/>
                 </Route>
 
                 <div className="container webb-padding-20px webb-padding-top-65px">
@@ -68,7 +70,15 @@ export default class CourseManager extends React.Component {
                                      deleteCourse={this.deleteCourse}
                                      courses={this.state.courses}/>
                     </Route>
+
+                    <Route path="/courses/grid">
+                        <CourseGrid updateCourse={this.updateCourse}
+                                    deleteCourse={this.deleteCourse}
+                                    courses={this.state.courses}/>
+                    </Route>
                 </div>
+                <i className="fas fa-3x fa-plus-circle webb-pull-bottom-right-fixed webb-color-red"
+                   onClick={() => this.addCourse()}></i>
             </div>
         )
     }

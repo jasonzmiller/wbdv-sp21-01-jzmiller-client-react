@@ -1,7 +1,7 @@
 import React from 'react';
 import './course-styling.css';
 
-const CourseNavbar = () => {
+const CourseNavbar = ({addCourse}) => {
     return (
         <div className="webb-sticky-top">
             <div className="row">
@@ -21,7 +21,8 @@ const CourseNavbar = () => {
                 </div>
 
                 <div className="col-1">
-                    <i className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>
+                    <i onClick={() => addCourse()}
+                       className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>
                 </div>
             </div>
         </div>
