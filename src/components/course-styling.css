@@ -1,0 +1,115 @@
+.webb-sticky-top {
+    background-color: slategray;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.webb-background-aliceblue {
+    background: aliceblue;
+}
+
+.webb-bottom-right {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1;
+}
+
+.webb-padding-top-70px {
+    padding-top: 70px;
+}
+
+.webb-pill-color {
+    color: azure;
+    background-color: black;
+    border: solid 1px deepskyblue;
+}
+
+.webb-azure {
+    color: azure;
+}
+
+.webb-black {
+    color: black;
+}
+
+.webb-pill-active-border {
+    border: solid 1px azure;
+}
+
+.webb-color-lightskyblue {
+    color: lightskyblue;
+}
+
+.webb-color-green {
+    color: green;
+}
+
+.webb-color-red {
+    color: red;
+}
+
+.webb-color-blue {
+    color: blue;
+}
+
+.webb-background-aliceblue {
+    background: aliceblue;
+}
+
+.webb-padding-20px {
+    padding: 20px;
+}
+
+.webb-padding-top-65px {
+    padding-top: 65px;
+}
+
+.webb-hr-thick {
+    width: 10px;
+}
+
+.webb-dashtable-title {
+    width: 30%;
+}
+
+.webb-dashtable-ownedby {
+    width: 20%;
+}
+
+.webb-dashtable-lastmodified {
+    width: 40%;
+}
+
+.webb-dashtable-trash {
+    width: 10%;
+}
+
+.webb-whitespace-nowrap {
+    white-space: nowrap;
+}
+
+.webb-pull-top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.webb-pull-bottom-right {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.webb-pull-bottom-right-fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    z-index: 1;
+}
+
+.webb-margin {
+    margin: 5px;
+}
