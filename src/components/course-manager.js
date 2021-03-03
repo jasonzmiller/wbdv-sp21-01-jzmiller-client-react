@@ -62,6 +62,8 @@ export default class CourseManager extends React.Component {
             <div>
                 <Route path={["/courses/table", "/courses/grid"]}>
                     <CourseNavbar addCourse={this.addCourse}/>
+                    <i className="fas fa-3x fa-plus-circle webb-pull-bottom-right-fixed webb-color-red"
+                       onClick={() => this.addCourse()}></i>
                 </Route>
 
                 <div className="container webb-padding-20px webb-padding-top-65px">
@@ -77,8 +79,7 @@ export default class CourseManager extends React.Component {
                                     courses={this.state.courses}/>
                     </Route>
                 </div>
-                <i className="fas fa-3x fa-plus-circle webb-pull-bottom-right-fixed webb-color-red"
-                   onClick={() => this.addCourse()}></i>
+
             </div>
         )
     }
