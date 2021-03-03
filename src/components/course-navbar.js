@@ -1,7 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './course-styling.css';
 
-const CourseNavbar = ({addCourse}) => {
+const CourseNavbar = (
+    {
+        addCourse,
+        addSpecifiedCourse,
+        title=""
+    }) => {
+
+    const [newTitle, setNewTitle] = useState(title);
+
+    const createSpecifiedCourse = () => {
+        const newCourse = {
+            title: newTitle,
+            owner: "me",
+            lastModified: "today"
+        }
+        addSpecifiedCourse(newCourse)
+    }
+
     return (
         <div className="webb-sticky-top">
             <div className="row">
@@ -17,12 +34,24 @@ const CourseNavbar = ({addCourse}) => {
                 </div>
 
                 <div className="col-8">
-                    <input className="form-control"/>
+                    <input className="form-control"
+                           id="formy"
+                           type="text"
+                           onChange={(event) => setNewTitle(event.target.value)}/>
                 </div>
 
                 <div className="col-1">
-                    <i onClick={() => addCourse()}
-                       className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>
+                    {
+                        (newTitle.length == 0) &&
+                        <i onClick={() => addCourse()}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>}
+                    {
+                        (newTitle.length != 0) &&
+                        <i onClick={() => {
+                            document.getElementById("formy").value = "";
+                            createSpecifiedCourse()
+                        }}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>}
                 </div>
             </div>
         </div>

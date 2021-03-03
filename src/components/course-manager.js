@@ -45,6 +45,17 @@ export default class CourseManager extends React.Component {
                 })))
     }
 
+    addSpecifiedCourse = (newCourse) => {
+        courseService.createCourse(newCourse)
+            .then(course => this.setState(
+                (prevState) => ({
+                    ...prevState,
+                    courses: [
+                        ...prevState.courses,
+                        course]
+                })))
+    }
+
     deleteCourse = (courseToDelete) => {
         courseService.deleteCourse(courseToDelete._id)
             .then(status => {
@@ -61,7 +72,9 @@ export default class CourseManager extends React.Component {
         return(
             <div>
                 <Route path={["/courses/table", "/courses/grid"]}>
-                    <CourseNavbar addCourse={this.addCourse}/>
+                    <CourseNavbar addCourse={this.addCourse}
+                                  addSpecifiedCourse={this.addSpecifiedCourse}
+                                  courses={this.state.courses}/>
                     <i className="fas fa-3x fa-plus-circle webb-pull-bottom-right-fixed webb-color-red"
                        onClick={() => this.addCourse()}></i>
                 </Route>
