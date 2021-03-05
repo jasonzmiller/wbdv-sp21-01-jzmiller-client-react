@@ -9,8 +9,12 @@ function App() {
   return (
       <BrowserRouter>
           <div className="container-fluid">
-              <Route path="/" exact={true} component={Home}/>
-              <Route path="/courses/editor" exact={true} render={(props => <CourseEditor {...props}/>)}/>
+              <Route path="/"
+                     exact={true}
+                     component={Home}/>
+              <Route path="/courses/editor"
+                     exact={true}
+                     render={(props => <CourseEditor {...props}/>)}/>
           </div>
         <div className="App">
           <CourseManager/>
