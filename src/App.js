@@ -12,8 +12,10 @@ function App() {
               <Route path="/"
                      exact={true}
                      component={Home}/>
-              <Route path="/courses/editor"
-                     exact={true}
+              <Route path={["/courses/editor",
+                            "/courses/editor/:courseId",
+                            "/courses/editor/:courseId/:moduleId",
+                            "/courses/editor/:courseId/:moduleId/:lessonId"]}
                      render={(props => <CourseEditor {...props}/>)}/>
           </div>
         <div className="App">

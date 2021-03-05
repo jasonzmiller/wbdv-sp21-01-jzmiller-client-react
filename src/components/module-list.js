@@ -1,33 +1,38 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import EditableItem from "./editable-item";
+import {useParams} from "react-router-dom";
 
 const ModuleList = (
     {
+        to="/go/somewhere/else",
         myModules = [],
         createModule = () => alert("create module"),
         deleteModule = (item) => alert("delete " + item._id),
         updateModule = (item) => alert("update module" + item._id)
-    }) =>
-    <div>
-        <h2>
-            Modules {myModules.length}
-            <ul className="list-group">
-                {
-                    myModules.map(module =>
+    }) => {
+    const {courseId} = useParams();
+    return (
+        <div>
+            <h2>Modules {myModules.length} {courseId}</h2>
+                <ul className="list-group">
+                    {
+                        myModules.map(module =>
+                            <li className="list-group-item">
+                                <EditableItem to={`/courses/editor/jkh/kjh`}
+                                              updateItem={updateModule}
+                                              deleteItem={deleteModule}
+                                              item={module}/>
+                            </li>
+                        )
+                    }
                     <li className="list-group-item">
-                        <EditableItem updateItem={updateModule}
-                                      deleteItem={deleteModule}
-                                      item={module}/>
+                        <i onClick={createModule} className="fas fa-plus fa-2x"></i>
                     </li>
-                    )
-                }
-                <li className="list-group-item">
-                    <i onClick={createModule} className="fas fa-plus fa-2x"></i>
-                </li>
-            </ul>
-        </h2>
-    </div>
+                </ul>
+        </div>
+    )
+}
 
 const stpm = (state) => {
     return {

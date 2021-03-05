@@ -24,7 +24,7 @@ const CourseRow = (
             <td align="left">
                 {
                     !editing &&
-                    <Link to="/courses/editor">
+                    <Link to={`/courses/editor/${course._id}`}>
                         <i className="fa fa-file webb-margin"></i>
                         {course.title}
                     </Link>
