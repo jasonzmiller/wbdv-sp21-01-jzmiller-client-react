@@ -9,7 +9,8 @@ const EditableItem = (
         item = {
             title: "some title",
             _id: "ABC"
-        }
+        },
+        active=true
     }) => {
 
     const [editing, setEditing] = useState(false)
@@ -20,8 +21,8 @@ const EditableItem = (
             {
                 !editing &&
                 <>
-                    <Link className="nav-link" to={to}>
-                        {item.title}
+                    <Link className={`nav-link ${active ? 'active': ''}`} to={to}>
+                        {item.title} {item._id}
                         <i onClick={() => setEditing(true)} className="fas fa-edit"></i>
                     </Link>
                 </>

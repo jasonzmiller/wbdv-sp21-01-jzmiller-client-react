@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import EditableItem from "./editable-item";
 import {useParams} from "react-router-dom";
+import moduleService from "../services/module-service"
 
 const ModuleList = (
     {
@@ -9,25 +10,30 @@ const ModuleList = (
         myModules = [],
         createModule = () => alert("create module"),
         deleteModule = (item) => alert("delete " + item._id),
-        updateModule = (item) => alert("update module" + item._id)
+        updateModule = (item) => alert("update module" + item._id),
+        findModulesForCourse = (courseId) => console.log(courseId)
     }) => {
-    const {courseId} = useParams();
+    const {courseId, moduleId} = useParams();
+    useEffect(() => {
+        findModulesForCourse(courseId)
+    }, [])
     return (
         <div>
             <h2>Modules {myModules.length} {courseId}</h2>
                 <ul className="list-group">
                     {
                         myModules.map(module =>
-                            <li className="list-group-item">
-                                <EditableItem to={`/courses/editor/jkh/kjh`}
+                            <li className={`list-group-item ${module._id === moduleId ? 'active' : ''}`}>
+                                <EditableItem to={`${courseId}/modules/${moduleId}`}
                                               updateItem={updateModule}
                                               deleteItem={deleteModule}
+                                              active={module._id === moduleId}
                                               item={module}/>
                             </li>
                         )
                     }
                     <li className="list-group-item">
-                        <i onClick={createModule} className="fas fa-plus fa-2x"></i>
+                        <i onClick={() => createModule(courseId)} className="fas fa-plus fa-2x"></i>
                     </li>
                 </ul>
         </div>
@@ -42,19 +48,35 @@ const stpm = (state) => {
 
 const dtpm = (dispatch) => {
     return {
-        createModule: () => dispatch({
-            type: "CREATE_MODULE"
-        }),
+        createModule: (courseId) => {
+            moduleService.createModuleForCourse(courseId, {title: "new module"})
+                .then(theActualModule => dispatch({
+                    type: "CREATE_MODULE",
+                    module: theActualModule
+                }))
+        },
 
-        deleteModule: (item) => dispatch({
-            type: "DELETE_MODULE",
-            moduleToDelete: item
-        }),
+        deleteModule: (item) =>
+            moduleService.deleteModule(item._id)
+                .then(status => dispatch({
+                    type: "DELETE_MODULE",
+                    moduleToDelete: item
+                })),
 
-        updateModule: (module) => dispatch({
-            type: "UPDATE_MODULE",
-            module
-        })
+        updateModule: (module) =>
+            moduleService.updateModule(module._id, module)
+                .then(status => dispatch({
+                    type: "UPDATE_MODULE",
+                    module
+                })),
+
+        findModulesForCourse: (courseId) => {
+            moduleService.findModulesForCourse(courseId)
+                .then(theModules => dispatch({
+                    type: "FIND_MODULES_FOR_COURSE",
+                    modules: theModules
+                }))
+        }
     }
 }
 

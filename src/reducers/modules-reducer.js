@@ -1,18 +1,5 @@
 const initialState = {
-    modules: [
-        {
-            _id: 123,
-            title: "Module 123"
-        },
-        {
-            _id: 234,
-            title: "Module 234"
-        },
-        {
-            _id: 345,
-            title: "Module 345"
-        }
-    ]
+    modules: []
 }
 
 const moduleReducer = (state=initialState, action) => {
@@ -21,10 +8,7 @@ const moduleReducer = (state=initialState, action) => {
             const newStateCreate = {
                 modules: [
                     ...state.modules,
-                    {
-                        _id: 456,
-                        title: "New Module"
-                    }
+                    action.module
                 ]
             }
             return newStateCreate
@@ -51,6 +35,13 @@ const moduleReducer = (state=initialState, action) => {
                     }
                 })
             }
+
+        case "FIND_MODULES_FOR_COURSE":
+            return {
+                ...state,
+                modules: action.modules
+            }
+
         default:
             return state
     }

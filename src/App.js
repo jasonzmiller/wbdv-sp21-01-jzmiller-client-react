@@ -8,18 +8,20 @@ import CourseEditor from "./components/course-editor";
 function App() {
   return (
       <BrowserRouter>
-          <div className="container-fluid">
-              <Route path="/"
-                     exact={true}
-                     component={Home}/>
-              <Route path={["/courses/editor",
-                            "/courses/editor/:courseId",
-                            "/courses/editor/:courseId/:moduleId",
-                            "/courses/editor/:courseId/:moduleId/:lessonId"]}
-                     render={(props => <CourseEditor {...props}/>)}/>
-          </div>
-        <div className="App">
-          <CourseManager/>
+        <div className="container-fluid">
+            <Route path="/"
+                 exact={true}
+                 component={Home}/>
+
+            <Route path="/courses"
+                component={CourseManager}/>
+
+            <Route path={[
+              "/courses/:layout/edit/:courseId/",
+              "/courses/:layout/edit/:courseId/:moduleId/",
+              "/courses/:layout/edit/:courseId/:moduleId/:lessonId"]}
+                 exact={true}
+                 render={(props => <CourseEditor {...props}/>)}/>
         </div>
       </BrowserRouter>
   );
