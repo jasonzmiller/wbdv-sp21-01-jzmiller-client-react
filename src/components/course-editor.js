@@ -22,7 +22,7 @@ const CourseEditor = ({history}) => {
             <div>
                 <i onClick={() => history.goBack()}
                    className="fas fa-arrow-left fa-2x webb-margin"></i>
-                <h2>Course Editor {courseId} {moduleId}</h2>
+                <h2>Course Editor</h2>
                 <div className="row">
                     <div className="col-4">
                         <ModuleList/>

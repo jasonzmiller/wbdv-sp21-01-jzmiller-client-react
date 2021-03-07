@@ -7,6 +7,7 @@ const CourseRow = (
         deleteCourse,
         course
     }) => {
+
     const [editing, setEditing] = useState(false)
     const [newTitle, setNewTitle] = useState(course.title)
 
@@ -24,7 +25,7 @@ const CourseRow = (
             <td align="left">
                 {
                     !editing &&
-                    <Link to={`/courses/editor/${course._id}`}>
+                    <Link to={`/courses/table/edit/${course._id}`}>
                         <i className="fa fa-file webb-margin"></i>
                         {course.title}
                     </Link>
@@ -33,7 +34,7 @@ const CourseRow = (
                     editing &&
                     <input className="form-control"
                            value={newTitle}
-                           onChange={(event) => setNewTitle(event.target.value)}/>
+                           onChange={(e) => setNewTitle(e.target.value)}/>
                 }
             </td>
             <td className="d-none d-md-table-cell">{course.owner}</td>
