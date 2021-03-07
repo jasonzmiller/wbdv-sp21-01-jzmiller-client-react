@@ -10,15 +10,15 @@ const LessonTabs = (
         findLessonsForModule,
         createLessonForModule
     }) => {
-    const {courseId, moduleId} = useParams();
+
+    const {layout, courseId, moduleId, lessonId} = useParams();
+
     useEffect(() => {
-        // console.log("LOAD LESSONS FOR MODULE")
-        // console.log(moduleId)
-        console.log("LOAD LESSONS FOR MODULE: " + moduleId)
         if (moduleId !== "undefined" && typeof moduleId !== "undefined") {
             findLessonsForModule(moduleId)
         }
     }, [moduleId])
+
     return (
         <div>
             <h2>Lessons {courseId} {moduleId}</h2>
@@ -26,7 +26,7 @@ const LessonTabs = (
                 {
                     lessons.map(lesson =>
                         <li className="nav-items">
-                            <EditableItem to={`/courses/editor/${courseId}/${moduleId}/${lesson._id}`}
+                            <EditableItem to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
                                           item={lesson}/>
                         </li>)
                 }
@@ -37,11 +37,9 @@ const LessonTabs = (
         </div>
     )}
 
-const stpm = (state) => (
-    {
+const stpm = (state) => ({
         lessons: state.lessonReducer.lessons
-    }
-)
+    })
 
 const dtpm = (dispatch) => ({
     findLessonsForModule: (moduleId) => {

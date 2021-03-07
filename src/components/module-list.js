@@ -13,6 +13,7 @@ const ModuleList = (
         updateModule = (item) => alert("update module" + item._id),
         findModulesForCourse = (courseId) => console.log(courseId)
     }) => {
+
     const {layout, courseId, moduleId} = useParams();
 
     useEffect(() => {
