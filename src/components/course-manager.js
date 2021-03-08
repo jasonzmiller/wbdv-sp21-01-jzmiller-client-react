@@ -72,7 +72,8 @@ export default class CourseManager extends React.Component {
         return(
             <div>
 
-                <Route path={["/courses/table", "/courses/grid"]}>
+                <Route path={["/courses/table", "/courses/grid"]}
+                       exact={true}>
                     <CourseNavbar addCourse={this.addCourse}
                                   addSpecifiedCourse={this.addSpecifiedCourse}
                                   courses={this.state.courses}/>
@@ -81,13 +82,15 @@ export default class CourseManager extends React.Component {
                 </Route>
 
                 <div className="container webb-padding-20px webb-padding-top-65px">
-                    <Route path="/courses/table" exact={true}>
+                    <Route path="/courses/table"
+                           exact={true}>
                         <CourseTable updateCourse={this.updateCourse}
                                      deleteCourse={this.deleteCourse}
                                      courses={this.state.courses}/>
                     </Route>
 
-                    <Route path="/courses/grid" exact={true}>
+                    <Route path="/courses/grid"
+                           exact={true}>
                         <CourseGrid updateCourse={this.updateCourse}
                                     deleteCourse={this.deleteCourse}
                                     courses={this.state.courses}/>

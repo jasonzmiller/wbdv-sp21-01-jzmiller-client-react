@@ -6,6 +6,7 @@ const CourseCard = (
         course,
         deleteCourse,
         updateCourse}) => {
+
     const [editing, setEditing] = useState(false)
     const [newTitle, setNewTitle] = useState(course.title)
 
@@ -31,7 +32,7 @@ const CourseCard = (
                 <div className="card-body">
                     {
                         !editing &&
-                        <Link to="/courses/editor">
+                        <Link to={`/courses/grid/edit/${course._id}`}>
                             <h5 className="card-title">{course.title}</h5>
                         </Link>
                     }
@@ -42,7 +43,8 @@ const CourseCard = (
                                onChange={(event) => setNewTitle(event.target.value)}/>
                     }
                     <p className="card-text">Lorem ipsum dolor sit amet.</p>
-                    <Link to="/courses/editor" className="btn btn-primary">
+                    <Link to={`/courses/grid/edit/${course._id}`}
+                          className="btn btn-primary">
                         {course.title}
                     </Link>
                     <span className="webb-pull-bottom-right webb-whitespace-nowrap">

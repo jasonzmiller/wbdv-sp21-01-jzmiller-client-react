@@ -1,7 +1,7 @@
 const COURSE_URL = "https://wbdv-generic-server.herokuapp.com/api/001704833/courses";
 const MODULE_URL = "https://wbdv-generic-server.herokuapp.com/api/001704833/modules";
 
-export const createModuleForCourse = (courseId, module) =>
+export const createModule = (courseId, module) =>
     fetch(`${COURSE_URL}/${courseId}/modules`, {
         method: "POST",
         body: JSON.stringify(module),
@@ -9,6 +9,10 @@ export const createModuleForCourse = (courseId, module) =>
             'content-type': 'application/json'
         }
     })
+        .then(response => response.json())
+
+export const findModulesForCourse = (courseId) =>
+    fetch(`${COURSE_URL}/${courseId}/modules`)
         .then(response => response.json())
 
 export const updateModule = (moduleId, module) =>
@@ -21,10 +25,6 @@ export const updateModule = (moduleId, module) =>
     })
         .then(response => response.json())
 
-export const findModulesForCourse = (courseId) =>
-    fetch(`${COURSE_URL}/${courseId}/modules`)
-        .then(response => response.json())
-
 export const deleteModule = (moduleId) =>
     fetch(`${MODULE_URL}/${moduleId}`, {
         method: "DELETE"
@@ -32,9 +32,9 @@ export const deleteModule = (moduleId) =>
         .then(response => response.json())
 
 const api = {
+    createModule,
     findModulesForCourse,
     updateModule,
-    createModuleForCourse,
     deleteModule
 }
 

@@ -2,7 +2,12 @@ import React from 'react'
 import CourseCard from "./course-card";
 import {Link} from "react-router-dom";
 
-const CourseGrid = ({courses, deleteCourse, updateCourse}) =>
+const CourseGrid = (
+    {
+        courses,
+        deleteCourse,
+        updateCourse
+    }) =>
     <div>
         <div className="row">
             <div className="col-4">
@@ -26,7 +31,6 @@ const CourseGrid = ({courses, deleteCourse, updateCourse}) =>
                 courses.map(course =>
                     <CourseCard key={course._id}
                                 course={course}
-                                title={course.title}
                                 updateCourse={updateCourse}
                                 deleteCourse={deleteCourse}/>
                 )

@@ -7,14 +7,14 @@ import moduleService from "../services/module-service"
 const ModuleList = (
     {
         to="/go/somewhere/else",
-        myModules = [],
+        modules = [],
+        findModulesForCourse = (courseId) => console.log(courseId),
         createModule = () => alert("create module"),
-        deleteModule = (item) => alert("delete " + item._id),
         updateModule = (item) => alert("update module" + item._id),
-        findModulesForCourse = (courseId) => console.log(courseId)
+        deleteModule = (item) => alert("delete " + item._id)
     }) => {
 
-    const {layout, courseId, moduleId} = useParams();
+    const {layout, courseId} = useParams();
 
     useEffect(() => {
         findModulesForCourse(courseId)
@@ -22,16 +22,10 @@ const ModuleList = (
 
     return (
         <div>
-            <h2>Modules {myModules.length}</h2>
-                <ul>
-                    <li>layout: {layout}</li>
-                    <li>courseId: {courseId}</li>
-                    <li>moduleId: {moduleId}</li>
-                </ul>
-
+            <h2>Modules</h2>
                 <ul className="list-group">
                     {
-                        myModules.map(module =>
+                        modules.map(module =>
                             <li className="list-group-item">
                                 <EditableItem to={`/courses/${layout}/edit/${courseId}/modules/${module._id}`}
                                               updateItem={updateModule}
@@ -51,26 +45,27 @@ const ModuleList = (
 
 const stpm = (state) => {
     return {
-        myModules: state.moduleReducer.modules
+        modules: state.moduleReducer.modules
     }
 }
 
 const dtpm = (dispatch) => {
     return {
-        createModule: (courseId) => {
-            moduleService.createModuleForCourse(courseId, {title: "new module"})
-                .then(theActualModule => dispatch({
-                    type: "CREATE_MODULE",
-                    module: theActualModule
+        findModulesForCourse: (courseId) => {
+            moduleService.findModulesForCourse(courseId)
+                .then(modules => dispatch({
+                    type: "FIND_MODULES_FOR_COURSE",
+                    modules: modules
                 }))
         },
 
-        deleteModule: (item) =>
-            moduleService.deleteModule(item._id)
-                .then(status => dispatch({
-                    type: "DELETE_MODULE",
-                    moduleToDelete: item
-                })),
+        createModule: (courseId) => {
+            moduleService.createModule(courseId, {title: "new module"})
+                .then(actualModule => dispatch({
+                    type: "CREATE_MODULE",
+                    module: actualModule
+                }))
+        },
 
         updateModule: (module) =>
             moduleService.updateModule(module._id, module)
@@ -79,13 +74,12 @@ const dtpm = (dispatch) => {
                     module
                 })),
 
-        findModulesForCourse: (courseId) => {
-            moduleService.findModulesForCourse(courseId)
-                .then(theModules => dispatch({
-                    type: "FIND_MODULES_FOR_COURSE",
-                    modules: theModules
+        deleteModule: (item) =>
+            moduleService.deleteModule(item._id)
+                .then(status => dispatch({
+                    type: "DELETE_MODULE",
+                    moduleToDelete: item
                 }))
-        }
     }
 }
 
