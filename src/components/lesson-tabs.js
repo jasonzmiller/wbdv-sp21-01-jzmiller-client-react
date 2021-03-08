@@ -63,8 +63,8 @@ const dtpm = (dispatch) => ({
             }))
     },
 
-    updateLesson: (lessonId, lesson) => {
-        lessonService.updateLesson(lessonId, lesson)
+    updateLesson: (lesson) => {
+        lessonService.updateLesson(lesson._id, lesson)
             .then(status => dispatch({
                 type: "UPDATE_LESSON",
                 lesson
