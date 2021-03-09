@@ -13,7 +13,7 @@ const LessonTabs = (
         deleteLesson
     }) => {
 
-    const {layout, courseId, moduleId} = useParams();
+    const {layout, courseId, moduleId, lessonId} = useParams();
 
     useEffect(() => {
         if (moduleId !== "undefined" && typeof moduleId !== "undefined") {
@@ -31,12 +31,16 @@ const LessonTabs = (
                             <EditableItem to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
                                           updateItem={updateLesson}
                                           deleteItem={deleteLesson}
-                                          item={lesson}/>
+                                          item={lesson}
+                                          active={lesson._id === lessonId ? true : false}
+                                          paddingLeft={true}/>
                         </li>)
                 }
-                <li>
-                    <i onClick={() => createLesson(moduleId)}
-                       className="fas fa-plus"></i>
+                <li className="nav-item">
+                    <ul>
+                        <i onClick={() => createLesson(moduleId)}
+                           className="fas fa-plus"></i>
+                    </ul>
                 </li>
             </ul>
         </div>

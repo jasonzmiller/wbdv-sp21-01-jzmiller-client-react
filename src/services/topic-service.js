@@ -20,7 +20,7 @@ export const updateTopic = (topicId, topic) =>
         method: "PUT",
         body: JSON.stringify(topic),
         headers: {
-            'content type' : 'application/json'
+            'content type': 'application/json'
         }
     })
         .then(response => response.json())
@@ -31,9 +31,11 @@ export const deleteTopic = (topicId) =>
     })
         .then(response => response.json())
 
-export default {
+const api = {
     createTopic,
     findTopicsForLesson,
     updateTopic,
     deleteTopic
 }
+
+export default api;

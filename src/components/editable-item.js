@@ -7,7 +7,8 @@ const EditableItem = (
         updateItem,
         deleteItem,
         item,
-        active=true
+        active=true,
+        paddingLeft=false
     }) => {
 
     const [editing, setEditing] = useState(false)
@@ -18,10 +19,11 @@ const EditableItem = (
             {
                 !editing &&
                 <>
-                    <Link className={`nav-link ${active ? 'active': ''}`}
+                    <Link className={`nav-link ${active ? 'active' : ''}`}
                           to={to}>
                         {item.title}
-                        <i onClick={() => setEditing(true)} className="fas fa-edit"></i>
+                        <i onClick={() => setEditing(true)}
+                           className={`fas fa-pencil float-right ${paddingLeft ? 'webb-padding-left' : ''}`}></i>
                     </Link>
                 </>
             }
@@ -35,17 +37,17 @@ const EditableItem = (
                         })}
                            value={cachedItem.title}
                            className="form-control"/>
-                    <i onClick={() => {
-                        setEditing(false)
-                        updateItem(cachedItem)
-                    }} className="fas fa-check"></i>
-                    <i onClick={() => deleteItem(item)} className="fas fa-times"></i>
+                        <i onClick={() => {
+                            setEditing(false)
+                            updateItem(cachedItem)
+                        }} className="fas fa-check"></i>
+                    <i onClick={() => deleteItem(item)}
+                       className="fas fa-times"></i>
                 </>
             }
         </>
     )
 }
-
 
 
 export default EditableItem

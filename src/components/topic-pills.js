@@ -14,7 +14,7 @@ const TopicPills = (
     }
 ) => {
 
-    const {layout, courseId, moduleId, lessonId} = useParams();
+    const {layout, courseId, moduleId, lessonId, topicId} = useParams();
 
     useEffect(() => {
         if (lessonId !== "undefined" && typeof lessonId !== "undefined") {
@@ -31,12 +31,16 @@ const TopicPills = (
                             <EditableItem to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
                                           updateItem={updateTopic}
                                           deleteItem={deleteTopic}
-                                          item={topic}/>
+                                          item={topic}
+                                          active={topic._id === topicId ? true : false}
+                                          paddingLeft={true}/>
                         </li>)
                 }
                 <li className="nav-item">
-                    <i onClick={() => createTopic(lessonId)}
-                       className="fas fa-plus"></i>
+                    <ul>
+                        <i onClick={() => createTopic(lessonId)}
+                           className="fas fa-plus"></i>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -70,6 +74,14 @@ const dtpm = (dispatch) => ({
             .then(status => dispatch({
                 type: "UPDATE_TOPIC",
                 topic
+            }))
+    },
+
+    deleteTopic: (topicToDelete) => {
+        topicService.deleteTopic(topicToDelete._id)
+            .then(status => dispatch({
+                type: "DELETE_TOPIC",
+                topicToDelete
             }))
     }
 })
