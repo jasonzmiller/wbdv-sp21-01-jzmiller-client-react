@@ -81,21 +81,23 @@ export default class CourseManager extends React.Component {
                        onClick={() => this.addCourse()}></i>
                 </Route>
 
-                <div className="container webb-padding-20px webb-padding-top-65px">
-                    <Route path="/courses/table"
-                           exact={true}>
+                <Route path="/courses/table"
+                       exact={true}>
+                    <div className="container webb-padding-20px webb-padding-top-65px">
                         <CourseTable updateCourse={this.updateCourse}
                                      deleteCourse={this.deleteCourse}
                                      courses={this.state.courses}/>
-                    </Route>
+                    </div>
+                </Route>
 
-                    <Route path="/courses/grid"
-                           exact={true}>
+                <Route path="/courses/grid"
+                       exact={true}>
+                    <div className="container webb-padding-20px webb-padding-top-65px">
                         <CourseGrid updateCourse={this.updateCourse}
                                     deleteCourse={this.deleteCourse}
                                     courses={this.state.courses}/>
-                    </Route>
-                </div>
+                    </div>
+                </Route>
 
             </div>
         )

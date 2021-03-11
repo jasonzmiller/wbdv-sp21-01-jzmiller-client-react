@@ -36,12 +36,15 @@ const TopicPills = (
                                           paddingLeft={true}/>
                         </li>)
                 }
+                {
+                lessonId !== "undefined" && typeof lessonId !== "undefined" &&
                 <li className="nav-item">
                     <ul>
                         <i onClick={() => createTopic(lessonId)}
-                           className="fas fa-plus"></i>
+                           className="fas fa-2x fa-plus webb-color-dodgerblue webb-position-fixed-right-40px"></i>
                     </ul>
                 </li>
+                }
             </ul>
         </div>
     )

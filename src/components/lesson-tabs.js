@@ -36,12 +36,15 @@ const LessonTabs = (
                                           paddingLeft={true}/>
                         </li>)
                 }
-                <li className="nav-item">
-                    <ul>
-                        <i onClick={() => createLesson(moduleId)}
-                           className="fas fa-plus"></i>
-                    </ul>
-                </li>
+                {
+                    moduleId !== "undefined" && typeof moduleId !== "undefined" &&
+                    <li className="nav-item">
+                        <ul>
+                            <i onClick={() => createLesson(moduleId)}
+                               className="fas fa-2x fa-plus webb-color-dodgerblue webb-position-fixed-right-40px"></i>
+                        </ul>
+                    </li>
+                }
             </ul>
         </div>
     )}

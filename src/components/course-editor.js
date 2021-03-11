@@ -34,7 +34,7 @@ const CourseEditor = () => {
                     <div className="col-3">
                         <ModuleList/>
                     </div>
-                    <div className="col-9">
+                    <div className="col-9"> 
                         <LessonTabs/>
                         <TopicPills/>
                     </div>

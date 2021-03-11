@@ -35,9 +35,9 @@ const ModuleList = (
                             </li>
                         )
                     }
-                    <li className="list-group-item">
+                    <li className="list-group-item text-center">
                         <i onClick={() => createModule(courseId)}
-                           className="fas fa-plus fa-2x"></i>
+                           className="fas fa-plus fa-2x webb-color-dodgerblue"></i>
                     </li>
                 </ul>
         </div>

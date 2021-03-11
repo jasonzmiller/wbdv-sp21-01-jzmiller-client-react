@@ -23,7 +23,7 @@ const EditableItem = (
                           to={to}>
                         {item.title}
                         <i onClick={() => setEditing(true)}
-                           className={`fas fa-pencil float-right ${paddingLeft ? 'webb-padding-left' : ''}`}></i>
+                           className={`fas fa-pencil-alt float-right ${paddingLeft ? 'webb-padding-left' : ''}`}></i>
                     </Link>
                 </>
             }
@@ -36,13 +36,19 @@ const EditableItem = (
                             title: e.target.value
                         })}
                            value={cachedItem.title}
-                           className="form-control"/>
+                           className="form-control webb-form-allow"/>
+                    <span className="fa-pull-right webb-width-18">
                         <i onClick={() => {
                             setEditing(false)
                             updateItem(cachedItem)
                         }} className="fas fa-check"></i>
-                    <i onClick={() => deleteItem(item)}
-                       className="fas fa-times"></i>
+
+                        <i onClick={() => {
+                            setEditing(false)
+                            deleteItem(item)
+                        }}
+                           className="fas fa-times"></i>
+                    </span>
                 </>
             }
         </>

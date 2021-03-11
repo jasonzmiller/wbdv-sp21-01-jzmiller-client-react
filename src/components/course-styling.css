@@ -43,6 +43,10 @@
     color: lightskyblue;
 }
 
+.webb-color-dodgerblue {
+    color: dodgerblue;
+}
+
 .webb-color-green {
     color: green;
 }
@@ -114,10 +118,24 @@
     z-index: 1;
 }
 
+.webb-position-fixed-right-40px {
+    position: fixed;
+    right: 40px;
+}
+
 .webb-margin {
     margin: 5px;
 }
 
 .webb-padding-left {
     padding-left: 7px;
+}
+
+.webb-form-allow {
+    display: inline;
+    width: 75%;
+}
+
+.webb-width-18 {
+    width: 18%;
 }
