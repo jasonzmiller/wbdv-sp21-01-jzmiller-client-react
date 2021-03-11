@@ -33,25 +33,25 @@ const CourseNavbar = (
                     </span>
                 </div>
 
-                <div className="col-8">
+                <div className="col-7">
                     <input className="form-control"
                            id="formy"
                            type="text"
                            onChange={(event) => setNewTitle(event.target.value)}/>
                 </div>
 
-                <div className="col-1">
+                <div className="col-2">
                     {
                         (newTitle.length == 0) &&
                         <i onClick={() => addCourse()}
-                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>}
                     {
                         (newTitle.length != 0) &&
                         <i onClick={() => {
                             document.getElementById("formy").value = "";
                             createSpecifiedCourse()
                         }}
-                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue fa-pull-right"></i>}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>}
                 </div>
             </div>
         </div>
