@@ -19,6 +19,21 @@ const CourseNavbar = (
         addSpecifiedCourse(newCourse)
     }
 
+    let gu = {
+        si: 'da',
+        cf: 'qe'
+    }
+    let uj = {
+        cf: 'do',
+        co: 'db',
+        ...gu,
+    }
+    gu = {
+        ...uj,
+        cf: 'wh',
+        co: 'nd'
+    }
+
     return (
         <div className="webb-sticky-top">
             <div className="row">
@@ -42,16 +57,23 @@ const CourseNavbar = (
 
                 <div className="col-2">
                     {
-                        (newTitle.length == 0) &&
-                        <i onClick={() => addCourse()}
-                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>}
+                        (newTitle.length === 0) &&
+                        <i onClick={() => {
+                            console.log(gu.si)
+                            console.log(uj.cf)
+                            console.log(gu.co)
+                            addCourse()
+                        }}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>
+                    }
                     {
-                        (newTitle.length != 0) &&
+                        (newTitle.length !== 0) &&
                         <i onClick={() => {
                             document.getElementById("formy").value = "";
                             createSpecifiedCourse()
                         }}
-                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>}
+                        className="fa fa-plus-circle fa-2x webb-color-lightskyblue"></i>
+                    }
                 </div>
             </div>
         </div>
