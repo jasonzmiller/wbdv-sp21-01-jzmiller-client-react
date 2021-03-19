@@ -7,7 +7,7 @@ import widgetService from "../../services/widget-service";
 
 const WidgetList = (
     {
-        widgets,
+        widgets=[],
         createWidget,
         findWidgetsForTopic,
         updateWidget,
@@ -34,9 +34,21 @@ const WidgetList = (
             <ul className="list-group">
                 {
                     widgets.map(widget => {
-                        /*console.log(widget)*/
+                        console.log(widget)
                         return (
-                            <li className="list-group-item"> {/*TODO key*/}
+                            <li>
+                                {
+                                    widget.type === "HEADING" &&
+                                    <HeadingWidget widget={widget}
+                                        /*editing={editingWidget.id === widget.id}*//>
+                                }
+                                {
+                                    widget.type === "PARAGRAPH" &&
+                                    <ParagraphWidget widget={widget}
+                                        /*editing={editingWidget.id === widget.id}*//>
+                                }
+                            </li>
+                            /*<li className="list-group-item"> {/!*TODO key*!/}
                                 <select className="form-control">
                                     <option value="heading">Heading</option>
                                     <option value="paragraph">Paragraph</option>
@@ -45,18 +57,9 @@ const WidgetList = (
                                     <option value="link">Link</option>
                                     <option value="list">List</option>
                                     <option value="HTML">HTML</option>
-                                </select>
-                                {
-                                    widget.type === "HEADING" &&
-                                    <HeadingWidget widget={widget}
-                                                   /*editing={editingWidget.id === widget.id}*//>
-                                }
-                                {
-                                    widget.type === "PARAGRAPH" &&
-                                    <ParagraphWidget widget={widget}
-                                                     /*editing={editingWidget.id === widget.id}*//>
-                                }
-                            </li>
+                                </select>*/
+
+                            /*</li>*/
                         )
                         }
                     )
