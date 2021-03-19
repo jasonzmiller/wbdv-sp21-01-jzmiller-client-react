@@ -3,110 +3,68 @@ import {useParams} from 'react-router-dom'
 import {connect} from "react-redux";
 import HeadingWidget from "./heading-widget";
 import ParagraphWidget from "./paragraph-widget";
-import widgetService from "../../services/widget-service.js";
+import widgetService from "../../services/widget-service";
 
 const WidgetList = (
     {
+        widgets,
         createWidget,
         findWidgetsForTopic,
-        findAllWidgets,
-        findWidgetById,
         updateWidget,
         deleteWidget
     }) => {
-    // TODO: move state management to widget-reducer
-    const [widgets, setWidgets] = useState([]);
 
     const [editingWidget, setEditingWidget] = useState({});
 
     const {topicId} = useParams();
 
     useEffect(() => {
-        // TODO: move server communication to widget-service
-        fetch(`http://localhost:8080/api/topics/${topicId}/widgets`)
-            .then(response => response.json())
-            .then(widgets => setWidgets(widgets))
+        if (topicId !== "undefined" && typeof topicId !== "undefined") {
+            findWidgetsForTopic(topicId)
+        }
     }, [topicId])
-
-    const createWidgetForTopic = () => {
-        // TODO: move server communication to widget-service
-        fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
-            method: "POST",
-            body: JSON.stringify({type: "HEADING", size: 1, text: "New Widget"}),
-            headers: {
-                'content-type' : 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(widget => {
-                setWidgets(widgets => ([...widgets, widget]))
-            })
-    }
-
-    const deleteWidget = (wid) =>
-        fetch(`http://localhost:8080/api/widgets/{wid}`, {
-            method: "DELETE"
-        })
-            .then(status => {
-                setWidgets((widgets) => widgets.filter(widget => widget.id !== wid))
-            })
-
-    const updateWidget = (wid, widget) =>
-        fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
-            method: "PUT",
-            body: JSON.stringify({widget}),
-            headers: {
-                'content-type' : 'application/json'
-            }
-        })
-            .then(status => {
-                setWidgets((widgets) => widgets.map(w => w.id !== wid ? w : widget))
-                setEditingWidget({})
-            })
 
     return (
         <div>
-            <i onClick={createWidgetForTopic} className="fas fa-plus fa-2x float-right"></i>
+            <i onClick={() => createWidget(topicId, {type: "HEADING", size: 1, text: "New Widget"})}
+               className="fas fa-plus fa-2x float-right"></i>
             <h2>
-                Widget List ({widgets.length}) {editingWidget.id}
+                Widget List ({widgets.length})
             </h2>
             <ul className="list-group">
                 {
-                    widgets.map(widget =>
-                        <li className="list-group-item" key={widget.id}>
-                            {
-                                editingWidget.id === widget.id &&
-                                    <>
-                                        <i onClick={() => {
-                                            updateWidget(widget.id, editingWidget)
-                                        }} className="fas fa-2x fa-check float-right"></i>
-                                        <i onClick={() => deleteWidget(widget.id)} className="fas fa-2x fa-trash float-right"></i>
-                                    </>
-                            }
-                            {
-                                editingWidget.id !== widget.id &&
-                                    <>
-                                        <i onClick={() => setEditingWidget(widget)} className="fas fa-2x fa-cog float-right"></i>
-                                    </>
-                            }
-                            {
-                                widget.type === "HEADING" &&
+                    widgets.map(widget => {
+                        /*console.log(widget)*/
+                        return (
+                            <li className="list-group-item"> {/*TODO key*/}
+                                <select className="form-control">
+                                    <option value="heading">Heading</option>
+                                    <option value="paragraph">Paragraph</option>
+                                    <option value="video">Video</option>
+                                    <option value="image">Image</option>
+                                    <option value="link">Link</option>
+                                    <option value="list">List</option>
+                                    <option value="HTML">HTML</option>
+                                </select>
+                                {
+                                    widget.type === "HEADING" &&
                                     <HeadingWidget widget={widget}
-                                                   editing={editingWidget.id === widget.id}/>
-                            }
-                            {
-                                widget.type === "PARAGRAPH" &&
+                                                   /*editing={editingWidget.id === widget.id}*//>
+                                }
+                                {
+                                    widget.type === "PARAGRAPH" &&
                                     <ParagraphWidget widget={widget}
-                                                     editing={editingWidget.id === widget.id}/>
-                            }
-                        </li>
-                    )}
+                                                     /*editing={editingWidget.id === widget.id}*//>
+                                }
+                            </li>
+                        )
+                        }
+                    )
+                }
             </ul>
-            {JSON.stringify(widgets)}
-
         </div>
     )
-}
+};
 
 const stpm = ( state ) => ({
     widgets: state.widgetReducer.widgets
@@ -121,15 +79,101 @@ const dtpm = ( dispatch ) => ({
             }))
     },
 
-    findWidgetsForTopic,
+    findWidgetsForTopic: (tid) => {
+        widgetService.findWidgetsForTopic(tid)
+            .then(widgets => dispatch({
+                type: "FIND_ALL_WIDGETS_FOR_TOPIC",
+                widgets
+            }))
+    },
 
-    findAllWidgets,
+    updateWidget: (wid, widget) => {
+        widgetService.updateWidget(wid, widget)
+            .then(status => dispatch({
+                type: "UPDATE_WIDGET",
+                widget
+            }))
+    },
 
-    findWidgetById,
-
-    updateWidget,
-
-    deleteWidget
+    deleteWidget: (wid) => {
+        widgetService.deleteWidget(wid)
+            .then(status => dispatch({
+                type: "DELETE_WIDGET",
+                wid
+            }))
+    }
 })
 
 export default connect( stpm, dtpm ) ( WidgetList );
+
+
+
+// {
+//     editingWidget.id === widget.id &&
+//     <>
+//         <i onClick={() => {
+//             updateWidget(widget.id, editingWidget)
+//         }} className="fas fa-2x fa-check float-right"></i>
+//         <i onClick={() => deleteWidget(widget.id)}
+//            className="fas fa-2x fa-trash float-right"></i>
+//     </>
+// }
+// {
+//     editingWidget.id !== widget.id &&
+//     <>
+//         <i onClick={() => setEditingWidget(widget)}
+//            className="fas fa-2x fa-cog float-right"></i>
+//     </>
+// }
+// {
+//     widget.type === "HEADING" &&
+//     <HeadingWidget widget={widget}
+//                    editing={editingWidget.id === widget.id}/>
+// }
+// {
+//     widget.type === "PARAGRAPH" &&
+//     <ParagraphWidget widget={widget}
+//                      editing={editingWidget.id === widget.id}/>
+// }
+
+
+
+
+// TODO: move state management to widget-reducer
+// const [widgets, setWidgets] = useState([]);
+
+// const createWidgetForTopic = () => {
+//     // TODO: move server communication to widget-service
+//     fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
+//         method: "POST",
+//         body: JSON.stringify({type: "HEADING", size: 1, text: "New Widget"}),
+//         headers: {
+//             'content-type' : 'application/json'
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(widget => {
+//             setWidgets(widgets => ([...widgets, widget]))
+//         })
+// }
+//
+// const deleteWidget = (wid) =>
+//     fetch(`http://localhost:8080/api/widgets/{wid}`, {
+//         method: "DELETE"
+//     })
+//         .then(status => {
+//             setWidgets((widgets) => widgets.filter(widget => widget.id !== wid))
+//         })
+//
+// const updateWidget = (wid, widget) =>
+//     fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
+//         method: "PUT",
+//         body: JSON.stringify({widget}),
+//         headers: {
+//             'content-type' : 'application/json'
+//         }
+//     })
+//         .then(status => {
+//             setWidgets((widgets) => widgets.map(w => w.id !== wid ? w : widget))
+//             setEditingWidget({})
+//         })

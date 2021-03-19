@@ -22,7 +22,7 @@ const store = createStore(reducer)
 
 const CourseEditor = () => {
 
-    const {layout} = useParams();
+    const {layout, topicId} = useParams();
 
     return (
         <Provider store={store}>
@@ -40,7 +40,10 @@ const CourseEditor = () => {
                     <div className="col-9"> 
                         <LessonTabs/>
                         <TopicPills/>
-                        <WidgetList/>
+                        {
+                            topicId !== "undefined" && typeof topicId !== "undefined" &&
+                            <WidgetList/>
+                        }
                     </div>
                 </div>
             </div>
