@@ -8,6 +8,7 @@ import widgetService from "../../services/widget-service";
 const WidgetList = (
     {
         widgets=[],
+        type="",
         createWidget,
         findWidgetsForTopic,
         updateWidget,
@@ -15,6 +16,8 @@ const WidgetList = (
     }) => {
 
     const [editingWidget, setEditingWidget] = useState({});
+
+    const [newType, setNewType] = useState(type);
 
     const {topicId} = useParams();
 
@@ -33,35 +36,56 @@ const WidgetList = (
             </h2>
             <ul className="list-group">
                 {
-                    widgets.map(widget => {
-                        console.log(widget)
-                        return (
-                            <li>
+                    widgets.map(widget =>
+                            <li className="list-group-item"
+                                key={widget.id}>
+                                {
+                                    editingWidget.id === widget.id &&
+                                    <>
+                                        <select className="form-control"
+                                                value={newType}
+                                                onChange={(e) => setNewType(e.target.value)}>
+                                            <option value="heading">Heading</option>
+                                            <option value="paragraph">Paragraph</option>
+                                            <option value="video">Video</option>
+                                            <option value="image">Image</option>
+                                            <option value="link">Link</option>
+                                            <option value="list">List</option>
+                                            <option value="HTML">HTML</option>
+                                        </select>
+                                        <i className="fas fa-2x fa-check float-right"
+                                           onClick={() => {
+                                               updateWidget(editingWidget.id, editingWidget)
+                                               setEditingWidget({})
+                                               console.log(editingWidget)
+                                           }}></i>
+                                        <i className="fas fa-2x fa-trash float-right"
+                                           onClick={() => {
+                                               deleteWidget(editingWidget.id, editingWidget)
+                                               setEditingWidget({})
+                                           }}></i>
+                                    </>
+
+                                }
+                                {
+                                    editingWidget !== widget.id &&
+                                    <>
+                                        <i className="fas fa-2x fa-cog float-right"
+                                           onClick={() => setEditingWidget(widget)}></i>
+                                    </>
+                                }
                                 {
                                     widget.type === "HEADING" &&
                                     <HeadingWidget widget={widget}
-                                        /*editing={editingWidget.id === widget.id}*//>
+                                                   text={widget.text}
+                                                   editing={editingWidget.id === widget.id}/>
                                 }
                                 {
                                     widget.type === "PARAGRAPH" &&
                                     <ParagraphWidget widget={widget}
-                                        /*editing={editingWidget.id === widget.id}*//>
+                                                     editing={editingWidget.id === widget.id}/>
                                 }
                             </li>
-                            /*<li className="list-group-item"> {/!*TODO key*!/}
-                                <select className="form-control">
-                                    <option value="heading">Heading</option>
-                                    <option value="paragraph">Paragraph</option>
-                                    <option value="video">Video</option>
-                                    <option value="image">Image</option>
-                                    <option value="link">Link</option>
-                                    <option value="list">List</option>
-                                    <option value="HTML">HTML</option>
-                                </select>*/
-
-                            /*</li>*/
-                        )
-                        }
                     )
                 }
             </ul>

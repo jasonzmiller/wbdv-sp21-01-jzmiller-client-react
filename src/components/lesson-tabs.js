@@ -27,7 +27,8 @@ const LessonTabs = (
             <ul className="nav nav-tabs">
                 {
                     lessons.map(lesson =>
-                        <li className="nav-item">
+                        <li className="nav-item"
+                            key={lesson._id}>
                             <EditableItem to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
                                           updateItem={updateLesson}
                                           deleteItem={deleteLesson}

@@ -1,13 +1,48 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import {connect} from "react-redux";
+import widgetService from "../../services/widget-service";
 
-const HeadingWidget = ({widget, editing}) => {
+const HeadingWidget = (
+    {
+        widget,
+        updateWidget,
+        editing,
+        text=widget.text,
+        size=widget.size
+    }) => {
+
+    const [newText, setNewText] = useState(text);
+
+    const [newSize, setNewSize] = useState(size)
+
+    const updateTextOfWidget = () => {
+        const updatedWidget = {
+            ...widget,
+            text: newText
+        }
+        console.log(updatedWidget)
+        updateWidget(updatedWidget)
+    }
+
+    useEffect(() => {
+
+    }, [widget])
+
+
     return(
         <>
             {
                 editing &&
                 <>
-                    <input value={widget.text} className="form-control"/>
-                    <select className="form-control">
+                    <select className="form-control"
+                            value={newSize}
+                            onChange={(e) => {
+                                setNewSize(e.target.value)
+                                updateWidget({
+                                        ...widget,
+                                        size: newSize
+                                    })
+                            }}>
                         <option value={1}>Heading 1</option>
                         <option value={2}>Heading 2</option>
                         <option value={3}>Heading 3</option>
@@ -15,6 +50,17 @@ const HeadingWidget = ({widget, editing}) => {
                         <option value={5}>Heading 5</option>
                         <option value={6}>Heading 6</option>
                     </select>
+                    <input className="form-control"
+                           type="text"
+                           defaultValue={widget.text}
+                           onChange={(event) => {
+                               setNewText(event.target.value)
+                               updateWidget({
+                                   ...widget,
+                                   text: newText
+                               })
+                               console.log(widget)
+                           }}/>
                 </>
             }
             {
@@ -30,6 +76,30 @@ const HeadingWidget = ({widget, editing}) => {
             }
         </>
     )
-};
+}
 
-export default HeadingWidget
+const stpm = ( state ) => (
+    {
+        widgets: state.widgetReducer.widgets
+    }
+)
+
+const dtpm = ( dispatch ) => ({
+    findWidgetsForTopic: (tid) => {
+        widgetService.findWidgetsForTopic(tid)
+            .then(widgets => dispatch({
+                type: "FIND_ALL_WIDGETS_FOR_TOPIC",
+                widgets
+            }))
+    },
+
+    updateWidget: (widget) => {
+        widgetService.updateWidget(widget.id, widget)
+            .then(status => dispatch({
+                type: "UPDATE_WIDGET",
+                widget
+            }))
+    }
+})
+
+export default connect( stpm, dtpm ) ( HeadingWidget )

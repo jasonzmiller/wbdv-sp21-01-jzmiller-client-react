@@ -1,7 +1,7 @@
 const WIDGET_URL = "http://localhost:8080/api/widgets";
 const TOPIC_URL = "http://localhost:8080/api/topics";
 
-export const createWidget = (tid, widget) => {
+export const createWidget = (tid, widget) =>
     fetch(`${TOPIC_URL}/${tid}/widgets`, {
         method: "POST",
         body: JSON.stringify(widget),
@@ -10,8 +10,6 @@ export const createWidget = (tid, widget) => {
         }
     })
         .then(response => response.json())
-    console.log(widget)
-}
 
 export const findWidgetsForTopic = (tid) =>
     fetch(`${TOPIC_URL}/${tid}/widgets`)
