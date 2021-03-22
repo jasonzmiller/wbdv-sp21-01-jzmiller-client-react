@@ -68,7 +68,7 @@ const WidgetList = (
 
                                 }
                                 {
-                                    editingWidget !== widget.id &&
+                                    editingWidget.id !== widget.id &&
                                     <>
                                         <i className="fas fa-2x fa-cog float-right"
                                            onClick={() => setEditingWidget(widget)}></i>
@@ -78,7 +78,8 @@ const WidgetList = (
                                     widget.type === "HEADING" &&
                                     <HeadingWidget widget={widget}
                                                    text={widget.text}
-                                                   editing={editingWidget.id === widget.id}/>
+                                                   editing={editingWidget.id === widget.id}
+                                                   updateWidget={updateWidget}/>
                                 }
                                 {
                                     widget.type === "PARAGRAPH" &&

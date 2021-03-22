@@ -34,6 +34,13 @@ const HeadingWidget = (
             {
                 editing &&
                 <>
+                    {/*<i className="fas fa-2x fa-check float-right"*/}
+                    {/*   onClick={() => {*/}
+                    {/*       updateWidget({*/}
+                    {/*           ...widget,*/}
+                    {/*           text: newText*/}
+                    {/*       })*/}
+                    {/*   }}></i>*/}
                     <select className="form-control"
                             value={newSize}
                             onChange={(e) => {
@@ -55,10 +62,6 @@ const HeadingWidget = (
                            defaultValue={widget.text}
                            onChange={(event) => {
                                setNewText(event.target.value)
-                               updateWidget({
-                                   ...widget,
-                                   text: newText
-                               })
                                console.log(widget)
                            }}/>
                 </>
@@ -94,6 +97,7 @@ const dtpm = ( dispatch ) => ({
     },
 
     updateWidget: (widget) => {
+        console.log("1 "+ widget)
         widgetService.updateWidget(widget.id, widget)
             .then(status => dispatch({
                 type: "UPDATE_WIDGET",
