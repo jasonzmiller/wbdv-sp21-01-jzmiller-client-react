@@ -45,8 +45,7 @@ const WidgetList = (
                                                 updateWidget(widget.id, {
                                                         ...widget,
                                                         type: e.target.value})
-                                                setEditingWidget({})
-                                                console.log(widget)}}>
+                                                setEditingWidget(widget)}}>
                                         <option value="HEADING">Heading</option>
                                         <option value="PARAGRAPH">Paragraph</option>
                                         <option value="VIDEO">Video</option>
