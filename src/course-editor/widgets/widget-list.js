@@ -8,7 +8,6 @@ import widgetService from "../../services/widget-service";
 const WidgetList = (
     {
         widgets=[],
-        type="",
         createWidget,
         findWidgetsForTopic,
         updateWidget,
@@ -16,8 +15,6 @@ const WidgetList = (
     }) => {
 
     const [editingWidget, setEditingWidget] = useState({});
-
-    const [newType, setNewType] = useState(type);
 
     const {topicId} = useParams();
 
@@ -43,14 +40,19 @@ const WidgetList = (
                                 editingWidget.id === widget.id &&
                                 <>
                                     <select className="form-control"
-                                            value={newType}
-                                            onChange={(e) => setNewType(e.target.value)}>
-                                        <option value="heading">Heading</option>
-                                        <option value="paragraph">Paragraph</option>
-                                        <option value="video">Video</option>
-                                        <option value="image">Image</option>
-                                        <option value="link">Link</option>
-                                        <option value="list">List</option>
+                                            defaultValue={widget.type}
+                                            onChange={(e) => {
+                                                updateWidget(widget.id, {
+                                                        ...widget,
+                                                        type: e.target.value})
+                                                setEditingWidget({})
+                                                console.log(widget)}}>
+                                        <option value="HEADING">Heading</option>
+                                        <option value="PARAGRAPH">Paragraph</option>
+                                        <option value="VIDEO">Video</option>
+                                        <option value="IMAGE">Image</option>
+                                        <option value="LINK">Link</option>
+                                        <option value="LIST">List</option>
                                         <option value="HTML">HTML</option>
                                     </select>
                                 </>
