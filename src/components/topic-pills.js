@@ -24,7 +24,7 @@ const TopicPills = (
 
     return (
         <div className="webb-padding-35px">
-            <ul class="nav nav-pills nav-fill">
+            <ul className="nav nav-pills nav-fill">
                 {
                     topics.map(topic =>
                         <li key={topic._id}>

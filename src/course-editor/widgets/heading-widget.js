@@ -1,69 +1,54 @@
-import React, {useState, useEffect} from 'react'
-import {connect} from "react-redux";
-import widgetService from "../../services/widget-service";
+import React, {useState} from 'react'
 
 const HeadingWidget = (
     {
         widget,
         updateWidget,
+        deleteWidget,
         editing,
-        text=widget.text,
-        size=widget.size
+        setEditingWidget
     }) => {
 
-    const [newText, setNewText] = useState(text);
-
-    const [newSize, setNewSize] = useState(size)
-
-    const updateTextOfWidget = () => {
-        const updatedWidget = {
-            ...widget,
-            text: newText
-        }
-        console.log(updatedWidget)
-        updateWidget(updatedWidget)
-    }
-
-    useEffect(() => {
-
-    }, [widget])
-
+    const [cachedWidget, setCachedWidget] = useState(widget);
 
     return(
         <>
             {
                 editing &&
                 <>
-                    {/*<i className="fas fa-2x fa-check float-right"*/}
-                    {/*   onClick={() => {*/}
-                    {/*       updateWidget({*/}
-                    {/*           ...widget,*/}
-                    {/*           text: newText*/}
-                    {/*       })*/}
-                    {/*   }}></i>*/}
+                    <span className="float-right">
+                        <i className="fas fa-check"
+                           onClick={() => {
+                               updateWidget(widget.id, cachedWidget)
+                               setEditingWidget({})
+                               setCachedWidget(widget)
+                           }}></i>
+                        <i className="fas fa-trash"
+                           onClick={() => {deleteWidget(widget.id)}}></i>
+                    </span>
                     <select className="form-control"
-                            value={newSize}
+                            defaultValue={widget.size}
                             onChange={(e) => {
-                                setNewSize(e.target.value)
-                                updateWidget({
-                                        ...widget,
-                                        size: newSize
-                                    })
+                                setCachedWidget({
+                                    ...cachedWidget,
+                                    size: e.target.value
+                                })
                             }}>
-                        <option value={1}>Heading 1</option>
-                        <option value={2}>Heading 2</option>
-                        <option value={3}>Heading 3</option>
-                        <option value={4}>Heading 4</option>
-                        <option value={5}>Heading 5</option>
-                        <option value={6}>Heading 6</option>
+                        <option value="1">Heading 1</option>
+                        <option value="2">Heading 2</option>
+                        <option value="3">Heading 3</option>
+                        <option value="4">Heading 4</option>
+                        <option value="5">Heading 5</option>
+                        <option value="6">Heading 6</option>
                     </select>
                     <input className="form-control"
                            type="text"
                            defaultValue={widget.text}
-                           onChange={(event) => {
-                               setNewText(event.target.value)
-                               console.log(widget)
-                           }}/>
+                           onChange={(e) =>
+                               setCachedWidget({
+                                   ...cachedWidget,
+                                   text: e.target.value
+                           })}/>
                 </>
             }
             {
@@ -79,31 +64,6 @@ const HeadingWidget = (
             }
         </>
     )
-}
+};
 
-const stpm = ( state ) => (
-    {
-        widgets: state.widgetReducer.widgets
-    }
-)
-
-const dtpm = ( dispatch ) => ({
-    findWidgetsForTopic: (tid) => {
-        widgetService.findWidgetsForTopic(tid)
-            .then(widgets => dispatch({
-                type: "FIND_ALL_WIDGETS_FOR_TOPIC",
-                widgets
-            }))
-    },
-
-    updateWidget: (widget) => {
-        console.log("1 "+ widget)
-        widgetService.updateWidget(widget.id, widget)
-            .then(status => dispatch({
-                type: "UPDATE_WIDGET",
-                widget
-            }))
-    }
-})
-
-export default connect( stpm, dtpm ) ( HeadingWidget )
+export default HeadingWidget

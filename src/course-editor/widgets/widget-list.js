@@ -29,7 +29,7 @@ const WidgetList = (
 
     return (
         <div>
-            <i onClick={() => createWidget(topicId, {type: "HEADING", size: 1, text: "New Widget"})}
+            <i onClick={() => createWidget(topicId, {type: "PARAGRAPH", size: 5, text: "New Widget"})}
                className="fas fa-plus fa-2x float-right"></i>
             <h2>
                 Widget List ({widgets.length})
@@ -37,56 +37,49 @@ const WidgetList = (
             <ul className="list-group">
                 {
                     widgets.map(widget =>
-                            <li className="list-group-item"
-                                key={widget.id}>
-                                {
-                                    editingWidget.id === widget.id &&
-                                    <>
-                                        <select className="form-control"
-                                                value={newType}
-                                                onChange={(e) => setNewType(e.target.value)}>
-                                            <option value="heading">Heading</option>
-                                            <option value="paragraph">Paragraph</option>
-                                            <option value="video">Video</option>
-                                            <option value="image">Image</option>
-                                            <option value="link">Link</option>
-                                            <option value="list">List</option>
-                                            <option value="HTML">HTML</option>
-                                        </select>
-                                        <i className="fas fa-2x fa-check float-right"
-                                           onClick={() => {
-                                               updateWidget(editingWidget.id, editingWidget)
-                                               setEditingWidget({})
-                                               console.log(editingWidget)
-                                           }}></i>
-                                        <i className="fas fa-2x fa-trash float-right"
-                                           onClick={() => {
-                                               deleteWidget(editingWidget.id, editingWidget)
-                                               setEditingWidget({})
-                                           }}></i>
-                                    </>
+                        <li className="list-group-item"
+                            key={widget.id}>
+                            {
+                                editingWidget.id === widget.id &&
+                                <>
+                                    <select className="form-control"
+                                            value={newType}
+                                            onChange={(e) => setNewType(e.target.value)}>
+                                        <option value="heading">Heading</option>
+                                        <option value="paragraph">Paragraph</option>
+                                        <option value="video">Video</option>
+                                        <option value="image">Image</option>
+                                        <option value="link">Link</option>
+                                        <option value="list">List</option>
+                                        <option value="HTML">HTML</option>
+                                    </select>
+                                </>
 
-                                }
-                                {
-                                    editingWidget.id !== widget.id &&
-                                    <>
-                                        <i className="fas fa-2x fa-cog float-right"
-                                           onClick={() => setEditingWidget(widget)}></i>
-                                    </>
-                                }
-                                {
-                                    widget.type === "HEADING" &&
-                                    <HeadingWidget widget={widget}
-                                                   text={widget.text}
-                                                   editing={editingWidget.id === widget.id}
-                                                   updateWidget={updateWidget}/>
-                                }
-                                {
-                                    widget.type === "PARAGRAPH" &&
-                                    <ParagraphWidget widget={widget}
-                                                     editing={editingWidget.id === widget.id}/>
-                                }
-                            </li>
+                            }
+                            {
+                                editingWidget.id !== widget.id &&
+                                <>
+                                    <i className="fas fa-2x fa-cog float-right"
+                                       onClick={() => setEditingWidget(widget)}></i>
+                                </>
+                            }
+                            {
+                                widget.type === "HEADING" &&
+                                <HeadingWidget widget={widget}
+                                               updateWidget={updateWidget}
+                                               deleteWidget={deleteWidget}
+                                               editing={editingWidget.id === widget.id}
+                                               setEditingWidget={setEditingWidget}/>
+                            }
+                            {
+                                widget.type === "PARAGRAPH" &&
+                                <ParagraphWidget widget={widget}
+                                                 updateWidget={updateWidget}
+                                                 deleteWidget={deleteWidget}
+                                                 editing={editingWidget.id === widget.id}
+                                                 setEditingWidget={setEditingWidget}/>
+                            }
+                        </li>
                     )
                 }
             </ul>
@@ -132,76 +125,4 @@ const dtpm = ( dispatch ) => ({
     }
 })
 
-export default connect( stpm, dtpm ) ( WidgetList );
-
-
-
-// {
-//     editingWidget.id === widget.id &&
-//     <>
-//         <i onClick={() => {
-//             updateWidget(widget.id, editingWidget)
-//         }} className="fas fa-2x fa-check float-right"></i>
-//         <i onClick={() => deleteWidget(widget.id)}
-//            className="fas fa-2x fa-trash float-right"></i>
-//     </>
-// }
-// {
-//     editingWidget.id !== widget.id &&
-//     <>
-//         <i onClick={() => setEditingWidget(widget)}
-//            className="fas fa-2x fa-cog float-right"></i>
-//     </>
-// }
-// {
-//     widget.type === "HEADING" &&
-//     <HeadingWidget widget={widget}
-//                    editing={editingWidget.id === widget.id}/>
-// }
-// {
-//     widget.type === "PARAGRAPH" &&
-//     <ParagraphWidget widget={widget}
-//                      editing={editingWidget.id === widget.id}/>
-// }
-
-
-
-
-// TODO: move state management to widget-reducer
-// const [widgets, setWidgets] = useState([]);
-
-// const createWidgetForTopic = () => {
-//     // TODO: move server communication to widget-service
-//     fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
-//         method: "POST",
-//         body: JSON.stringify({type: "HEADING", size: 1, text: "New Widget"}),
-//         headers: {
-//             'content-type' : 'application/json'
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(widget => {
-//             setWidgets(widgets => ([...widgets, widget]))
-//         })
-// }
-//
-// const deleteWidget = (wid) =>
-//     fetch(`http://localhost:8080/api/widgets/{wid}`, {
-//         method: "DELETE"
-//     })
-//         .then(status => {
-//             setWidgets((widgets) => widgets.filter(widget => widget.id !== wid))
-//         })
-//
-// const updateWidget = (wid, widget) =>
-//     fetch(`http://localhost:8080/api/topics/${topicId}/widgets`, {
-//         method: "PUT",
-//         body: JSON.stringify({widget}),
-//         headers: {
-//             'content-type' : 'application/json'
-//         }
-//     })
-//         .then(status => {
-//             setWidgets((widgets) => widgets.map(w => w.id !== wid ? w : widget))
-//             setEditingWidget({})
-//         })
+export default connect( stpm, dtpm ) ( WidgetList )
