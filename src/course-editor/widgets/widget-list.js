@@ -39,13 +39,16 @@ const WidgetList = (
                             {
                                 editingWidget.id === widget.id &&
                                 <>
+                                    {/*{console.log("editingWidget.id: " + editingWidget.id)}
+                                    {console.log("widget.id: " + widget.id)}*/}
+                                    {console.log(widget)}
                                     <select className="form-control"
                                             defaultValue={widget.type}
                                             onChange={(e) => {
                                                 updateWidget(widget.id, {
                                                         ...widget,
                                                         type: e.target.value})
-                                                setEditingWidget(widget)}}>
+                                                setEditingWidget({})}}>
                                         <option value="HEADING">Heading</option>
                                         <option value="PARAGRAPH">Paragraph</option>
                                         <option value="VIDEO">Video</option>
