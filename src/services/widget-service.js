@@ -1,5 +1,5 @@
 const WIDGET_URL = "https://blooming-dawn-02366.herokuapp.com/api/widgets";
-const TOPIC_URL = "https://blooming-dawn-02366.herokuapp.com/api/topics";
+const TOPIC_URL = "https://wbdv-generic-server.herokuapp.com/api/001704833/topics";
 
 export const createWidget = (tid, widget) =>
     fetch(`${TOPIC_URL}/${tid}/widgets`, {
