@@ -26,7 +26,9 @@ const WidgetList = (
 
     return (
         <div>
-            <i onClick={() => createWidget(topicId, {type: "PARAGRAPH", size: 5, text: "New Widget"})}
+            <i onClick={() => {
+                createWidget(topicId, {type: "HEADING", size: 5, text: "New Widget"})
+            }}
                className="fas fa-plus fa-2x float-right"></i>
             <h2>
                 Widget List ({widgets.length})
@@ -39,9 +41,6 @@ const WidgetList = (
                             {
                                 editingWidget.id === widget.id &&
                                 <>
-                                    {/*{console.log("editingWidget.id: " + editingWidget.id)}
-                                    {console.log("widget.id: " + widget.id)}*/}
-                                    {console.log(widget)}
                                     <select className="form-control"
                                             defaultValue={widget.type}
                                             onChange={(e) => {
