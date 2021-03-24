@@ -19,8 +19,6 @@ const HeadingWidget = (
                     <span className="float-right">
                         <i className="fas fa-check"
                            onClick={() => {
-                               /*console.log(widget)
-                               console.log(cachedWidget)*/
                                updateWidget(widget.id, cachedWidget)
                                setEditingWidget({})
                                setCachedWidget(widget)

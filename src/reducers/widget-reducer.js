@@ -8,8 +8,8 @@ const widgetReducer = (state=initialState, action) => {
             return {
                 ...state,
                 widgets: [
-                    state.widgets,
-                    action.widget
+                    ...state.widgets,
+                    action.w
                 ]
             }
 
@@ -29,7 +29,7 @@ const widgetReducer = (state=initialState, action) => {
         case "DELETE_WIDGET":
             return {
                 widgets: state.widgets.filter(widget => {
-                    return widget.id === action.widget.id ? false : true
+                    return widget.id === action.wid ? false : true
                 })
             }
 

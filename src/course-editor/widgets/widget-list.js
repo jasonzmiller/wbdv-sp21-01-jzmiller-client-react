@@ -35,7 +35,7 @@ const WidgetList = (
             </h2>
             <ul className="list-group">
                 {
-                    widgets.map(widget =>
+                widgets &&    widgets.map(widget =>
                         <li className="list-group-item"
                             key={widget.id}>
                             {
