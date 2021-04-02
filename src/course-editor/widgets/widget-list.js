@@ -3,6 +3,8 @@ import {useParams} from 'react-router-dom'
 import {connect} from "react-redux";
 import HeadingWidget from "./heading-widget";
 import ParagraphWidget from "./paragraph-widget";
+import ImageWidget from "./image-widget";
+import ListWidget from "./list-widget";
 import widgetService from "../../services/widget-service";
 
 const WidgetList = (
@@ -27,7 +29,7 @@ const WidgetList = (
     return (
         <div>
             <i onClick={() => {
-                createWidget(topicId, {type: "HEADING", size: 5, text: "New Widget"})
+                createWidget(topicId, {type: "HEADING", size: 5, text: "New Widget", ordered: "false"})
             }}
                className="fas fa-plus fa-2x float-right"></i>
             <h2>
@@ -81,6 +83,22 @@ const WidgetList = (
                                                  deleteWidget={deleteWidget}
                                                  editing={editingWidget.id === widget.id}
                                                  setEditingWidget={setEditingWidget}/>
+                            }
+                            {
+                                widget.type === "IMAGE" &&
+                                <ImageWidget widget={widget}
+                                             updateWidget={updateWidget}
+                                             deleteWidget={deleteWidget}
+                                             editing={editingWidget.id === widget.id}
+                                             setEditingWidget={setEditingWidget}/>
+                            }
+                            {
+                                widget.type === "LIST" &&
+                                    <ListWidget widget={widget}
+                                                updateWidget={updateWidget}
+                                                deleteWidget={deleteWidget}
+                                                editing={editingWidget.id === widget.id}
+                                                setEditingWidget={setEditingWidget}/>
                             }
                         </li>
                     )
