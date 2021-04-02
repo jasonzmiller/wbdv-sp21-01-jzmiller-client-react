@@ -29,7 +29,15 @@ const WidgetList = (
     return (
         <div>
             <i onClick={() => {
-                createWidget(topicId, {type: "HEADING", size: 5, text: "New Widget", ordered: "false"})
+                createWidget(topicId, {
+                    type: "HEADING",
+                    size: 5,
+                    text: "New Widget",
+                    ordered: "false",
+                    width: 500,
+                    height: 400,
+                    url: "https://thehappypuppysite.com/wp-content/uploads/2019/07/baby-labrador-long.jpg"
+                })
             }}
                className="fas fa-plus fa-2x float-right"></i>
             <h2>

@@ -38,7 +38,7 @@ const ListWidget = (
                                     ...cachedWidget,
                                     ordered: e.target.checked
                                 })
-                    }}/> Ordered {JSON.stringify(editingOrdered)} {JSON.stringify(widget.ordered)}
+                    }}/> Ordered
                     <br/>
                     Item List
                     <textarea defaultValue={widget.text}
