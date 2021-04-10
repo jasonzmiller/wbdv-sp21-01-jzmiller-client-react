@@ -36,6 +36,11 @@ const CourseRow = (
                            value={newTitle}
                            onChange={(e) => setNewTitle(e.target.value)}/>
                 }
+                <span className="webb-float-right">
+                    <Link to={`${course._id}/quizzes`}>
+                        Quizzes
+                    </Link>
+                </span>
             </td>
             <td className="d-none d-md-table-cell">{course.owner}</td>
             <td className="d-none d-lg-table-cell">{course.lastModified}</td>
