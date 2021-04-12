@@ -143,3 +143,15 @@
 .webb-float-right {
     float: right;
 }
+
+.webb-margin-left {
+    margin-left: .5rem;
+}
+
+.webb-success {
+    background-color: #28a74552;
+}
+
+.webb-error {
+    background-color: #9b0d0d41
+}
