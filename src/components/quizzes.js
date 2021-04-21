@@ -24,7 +24,7 @@ const Quizzes = (
                     {
                         quizzes.map((quiz) => {
                             return(
-                                <li className="list-group-item">
+                                <li className="list-group-item" key={quiz._id}>
                                     <Link to={`/courses/${courseId}/quizzes/${quiz._id}`}>
                                         {quiz.title}
                                     </Link>

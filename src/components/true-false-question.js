@@ -3,18 +3,22 @@ import React, { useState } from 'react';
 const TrueFalseQuestion = (
     {
         question,
-        choices=["true", "false"]
+        choices=["true", "false"],
+        numberCorrect,
+        setNumberCorrect,
+        answers,
+        setAnswers
     }) => {
     
     const [cachedAnswer, setCachedAnswer] = useState("")
-    const [answered, setAnswered] = useState(false)
+    const [isAnswered, setIsAnswered] = useState(false)
 
     return(
         <>
         <span>
         <h4>{question.question}</h4>
         {
-            answered &&
+            isAnswered &&
             <i className={`fas fa-pull-right ${cachedAnswer === question.correct ? "fa-check" : "fa-times"}`}></i>
         }
         </span>
@@ -23,26 +27,26 @@ const TrueFalseQuestion = (
                 choices.map((choice) =>
                     <>
                     {
-                        answered && cachedAnswer === choice &&
-                        <li className={`list-group-item ${choice === question.correct ? 'webb-success' : 'webb-error'} `} key={choice}>
-                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name="question"></input>
-                            <label className="webb-margin-left" for={choice}>{choice}</label>
+                        isAnswered && cachedAnswer === choice &&
+                        <li className={`list-group-item ${choice === question.correct ? 'webb-success' : 'webb-error'} `} key={`${question.question}.${choice}`}>
+                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name={question.question}></input>
+                            <label className="webb-margin-left" htmlFor={choice}>{choice} {question._id}</label>
                             <i className={`fas ${choice === question.correct ? "fa-check" : "fa-times"}`}></i>
                         </li>
                     }
                     {
-                        answered && cachedAnswer !== choice &&
-                        <li className={`list-group-item ${choice === question.correct ? 'webb-success' : 'webb-error'} `} key={choice}>
-                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name="question"></input>
-                            <label className="webb-margin-left" for={choice}>{choice}</label>
+                        isAnswered && cachedAnswer !== choice &&
+                        <li className={`list-group-item ${choice === question.correct ? 'webb-success' : 'webb-error'} `} key={`${question.question}.${choice}`}>
+                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name={question.question}></input>
+                            <label className="webb-margin-left" htmlFor={choice}>{choice}</label>
                             <i className={`fas ${choice === question.correct ? "fa-check" : "fa-times"}`}></i>
                         </li>
                     }
                     {
-                        !answered &&
-                        <li className="list-group-item" key={choice}>
-                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name="question"></input>
-                            <label className="webb-margin-left" for={choice}>{choice}</label>
+                        !isAnswered &&
+                        <li className="list-group-item" key={`${question.question}.${choice}`}>
+                            <input onClick={(e) => setCachedAnswer(e.target.id)} type="radio" id={choice} name={question.question}></input>
+                            <label className="webb-margin-left" htmlFor={choice}>{choice}</label>
                         </li>
                     }
                     </>
@@ -50,10 +54,17 @@ const TrueFalseQuestion = (
             }
         </ul>
         {
-            answered &&
+            isAnswered &&
             <h6>Your answer: {cachedAnswer}</h6>
         }
-        <button onClick={() => setAnswered(true)} className="btn btn-success">Grade</button>
+        {
+            !isAnswered &&
+            <button onClick={() => {
+                setAnswers([...answers, {...question, answer: cachedAnswer}])
+                cachedAnswer === question.correct ? setNumberCorrect(numberCorrect + 1) : setNumberCorrect(numberCorrect)
+                setIsAnswered(true)
+                }} className="btn btn-success">Grade</button>
+        }
         </>
     )
 }
