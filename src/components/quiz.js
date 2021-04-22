@@ -2,7 +2,7 @@ import React , { useEffect , useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import questionService from '../services/question-service';
-import quizService from '../services/quiz-service';
+import quizService, { findAttemptsForQuiz } from '../services/quiz-service';
 import TrueFalseQuestion from './true-false-question';
 import MultipleChoiceQuestion from './multiple-choice-question';
 
@@ -63,6 +63,7 @@ const Quiz = (
                 <button onClick={() => {
                     setSubmitted(true)
                     submitQuiz(quizId, answers)
+                    findAttemptsForQuiz(quizId)
                 }} className="btn btn-success">Submit</button>
             }
             {
@@ -86,7 +87,8 @@ const dtpm = ( dispatch ) => ({
                 questions
             }))
     },
-    submitQuiz: (quizId, questions) => quizService.submitQuiz(quizId, questions)
+    submitQuiz: (quizId, questions) => quizService.submitQuiz(quizId, questions),
+    findAttemptsForQuiz: (quizId) => quizService.findAttemptsForQuiz(quizId)
 });
 
 export default connect ( stpm , dtpm ) ( Quiz )
