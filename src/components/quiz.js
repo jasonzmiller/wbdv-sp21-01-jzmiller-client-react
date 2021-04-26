@@ -58,14 +58,18 @@ const Quiz = (
                     })
                 }
             </ul>
-            {
+            <button onClick={() => {
+                    setSubmitted(true)
+                    submitQuiz(quizId, answers)
+                }} className="btn btn-success">Submit</button>
+            {/* {
                 !submitted &&
                 <button onClick={() => {
                     setSubmitted(true)
                     submitQuiz(quizId, answers)
                     findAttemptsForQuiz(quizId)
                 }} className="btn btn-success">Submit</button>
-            }
+            } */}
             {
                 submitted &&
                 <h4>Score: {Math.round(numberCorrect * 100 / questions.length)}%</h4>

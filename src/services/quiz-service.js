@@ -13,7 +13,6 @@ export const submitQuiz = (quizId, questions) =>
         }
     })
     .then(response => response.json())
-    .then(result => console.log(result))
 
 export const findAttemptsForQuiz = (quizId) =>
     fetch(`${QUIZZES_URL}/${quizId}/attempts`, {
